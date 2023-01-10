@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
 
     // get '/task/:id/edit'
+    //編集画面表示
     Route::get('/tasks/{taskId}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
 
     // patch '/task/:id/edit'
