@@ -6,6 +6,8 @@ use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\returnSelf;
+
 class TaskController extends Controller
 {
     public function index()
@@ -14,9 +16,14 @@ class TaskController extends Controller
         return view('task.index');
     }
 
-    public function show(int $taskId)
+    public function show(int $taskId )
     {
-        return 'tasks.show';
+        $tasks = Task::all();
+        // dd($tasks);
+
+        return view('task.index')
+            ->with('tasks', $tasks);
+
     }
 
     public function store(Request $request)

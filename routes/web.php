@@ -40,9 +40,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/tasks',[TaskController::class, 'index'])->name('tasks.index');
 
     // get '/task/:id'
+    //ログインしているユーザーのタスク一覧
     Route::get('/tasks/{taskId}',[TaskController::class, 'show'])->name('tasks.show');
 
     // post '/task/:id'
+    //タスク新規作成処理
     Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
 
     // get '/task/:id/edit'
@@ -52,7 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/tasks/{taskId}', [TaskController::class, 'update'])->name('tasks.update');
 
     // get '/task/:id/done'
-    Route::get('/tasks/{taskId}/done', [TaskController::class, 'done'])->name('task.show.done');
+    Route::get('/tasks/{taskId}/done', [TaskController::class, 'done'])->name('tasks.show.done');
 
     // patch '/task/:id/done'
     Route::put('tasks/{taskId}/done',[TaskController::class,'updateDone'])->name('tasks.update.done');
