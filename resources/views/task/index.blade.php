@@ -43,9 +43,10 @@
                     @foreach ($tasks as $task)
                     <p>ID:{{ $task->id }}</p>
                     <p>タスク名:{{ $task->task_name}}</p>
-                    <p>メモ:{{ $task->content}}</p>
+                    {{-- <p>メモ:{{ $task->content}}</p>
                     <p>予定開始日:{{ $task->scheduled_start_date}}</p>
-                    <p>予定終了日:{{ $task->scheduled_end_date}}</p>
+                    <p>予定終了日:{{ $task->scheduled_end_date}}</p> --}}
+                    <a href="{{ route('tasks.show', ['taskId' =>$task->id]) }}">詳細を見る >></a>
                     <p>-------------------------</p>
                     @endforeach
                   @endif

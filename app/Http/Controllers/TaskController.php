@@ -22,6 +22,7 @@ class TaskController extends Controller
         // モデル->リレーション名
         $tasks = User::find($user->id)->tasks;
         $tasks = $user->tasks;
+        dd($tasks);
 
         // $tasks = Auth::user()->tasks;
 
@@ -41,11 +42,22 @@ class TaskController extends Controller
 
     public function show(int $taskId )
     {
-        $tasks = Task::find($taskId);
-        // dd($tasks);
+        $user = Auth::user();
 
-        return view('task.index')
-            ->with('tasks', $tasks);
+        $task = $user->tasks()
+            ->where('id', $taskId)
+            ->first();
+
+        // $user->id を使う
+        // $task = Task::where('id', $taskId)
+        //     ->where('user_id', $user->id)
+        //     // ->toSql();
+        //     ->first();
+
+        // dd($task);
+
+        return view('task.show')
+            ->with('task', $task);
     }
 
     public function store(Request $request)
