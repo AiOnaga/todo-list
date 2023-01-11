@@ -91,11 +91,19 @@ class TaskController extends Controller
 
     public function edit(int $taskId)
     {
-        return 'tasks.edit';
+        $user = Auth::user();
+        $task = $user->tasks()
+        ->where('id', $taskId)
+        ->first();
+
+        // return 'tasks.edit';
+        return view('task.edit')
+                ->with('task', $task);
     }
 
     public function update(int $taskId)
     {
+        // dd("更新");
         return redirect()->route('tasks.edit', ['taskId' => 1]);
     }
 

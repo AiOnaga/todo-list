@@ -12,26 +12,27 @@
                   {{ __("You're logged in!") }}
               </div> --}}
               <h2>タスクの編集</h2>
-              <form action="{{ route('tasks.edit') }}" method="post">
+              <form action="{{ route('tasks.update', ['taskId' => $task->id]) }}" method="post">
+                @method('PUT')
                 @csrf
 
                   <div>
                       <label for="task_name">タスク名: </label>
-                      <input type="text" name="task_name">
+                      <input type="text" name="task_name" value="{{ $task->task_name }}">
                   </div>
 
                   <div>
                       <label for="content">メモ: </label>
-                      <textarea name="content" cols=30 rows=1></textarea>    
+                      <textarea name="content" cols=30 rows=1>{{ $task->content }}</textarea>    
                   </div>
                   <div>
                       <label for="scheduled_start_date">予定開始日時: </label>
-                      <input type="datetime-local" name = "scheduled_start_date">
+                      <input type="datetime-local" name = "scheduled_start_date" value="{{ $task->scheduled_start_date }}">
                   </div>
 
                   <div>
                       <label for="scheduled_end_date">予定終了日時: </label>
-                      <input type="datetime-local" name = "scheduled_end_date">
+                      <input type="datetime-local" name = "scheduled_end_date" value="{{ $task->scheduled_end_date}}">
                   </div>
                   
                   <input type="submit" value="変更！">
