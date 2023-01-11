@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -12,18 +14,38 @@ class TaskController extends Controller
 {
     public function index()
     {
+        // $tasks = Task::all();
+
+        // 現在認証しているユーザーを取得
+        $user = Auth::user();
+        // dd($user->tasks);
+        // モデル->リレーション名
+        $tasks = User::find($user->id)->tasks;
+        $tasks = $user->tasks;
+
+        // $tasks = Auth::user()->tasks;
+
+        // 現在認証しているユーザーのIDのみを取得
+        // $id = Auth::id();
+        // dd($id);
+        // $tasks = User::find($id)->tasks;
+        
+        // 参考　$comments = Post::find(1)->comments;
+        // commentsテーブルが持つpost_id=1のデータを取得する
+        // $tasks = User::find(2)->tasks;
+
         // return 'tasks.index';
-        return view('task.index');
+        return view('task.index')
+            ->with('tasks', $tasks);
     }
 
     public function show(int $taskId )
     {
-        $tasks = Task::all();
+        $tasks = Task::find($taskId);
         // dd($tasks);
 
         return view('task.index')
             ->with('tasks', $tasks);
-
     }
 
     public function store(Request $request)

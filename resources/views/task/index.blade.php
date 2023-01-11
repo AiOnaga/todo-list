@@ -39,14 +39,16 @@
               <p>****************************</p>
               <h2>タスク一覧</h2>
                 <div>
-                  @foreach ($tasks as $task)
+                  @if ($tasks)
+                    @foreach ($tasks as $task)
                     <p>ID:{{ $task->id }}</p>
                     <p>タスク名:{{ $task->task_name}}</p>
                     <p>メモ:{{ $task->content}}</p>
                     <p>予定開始日:{{ $task->scheduled_start_date}}</p>
                     <p>予定終了日:{{ $task->scheduled_end_date}}</p>
                     <p>-------------------------</p>
-                  @endforeach
+                    @endforeach
+                  @endif
                 </div>
           </div>
       </div>
