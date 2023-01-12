@@ -54,6 +54,9 @@ Route::middleware('auth')->group(function () {
     // patch '/task/:id/edit'
     Route::put('/tasks/{taskId}', [TaskController::class, 'update'])->name('tasks.update');
 
+    //Delete
+    Route::delete('tasks/{taskId}',[TaskController::class, 'destroy'])->name('tasks.destroy');
+
     // get '/task/:id/done'
     Route::get('/tasks/{taskId}/done', [TaskController::class, 'done'])->name('tasks.show.done');
 

@@ -21,7 +21,14 @@
                     <p>メモ:{{ $task->content}}</p>
                     <p>予定開始日:{{ $task->scheduled_start_date}}</p>
                     <p>予定終了日:{{ $task->scheduled_end_date}}</p>
+                    <a href="{{ route('tasks.show.done', ['taskId' => $task->id]) }}">完了日入力 >></a>
                     <a href="{{ route('tasks.edit', ['taskId' => $task->id]) }}">編集する >></a>
+                    <form action="{{ route('tasks.destroy', ['taskId' => $task->id]) }}" method="post">
+                        @method('DELETE')
+                        @csrf
+                        <input type="submit" value="削除する！">
+                    </form>
+                    
                     <p>-------------------------</p>
                     {{-- @endforeach --}}
                   @endif
