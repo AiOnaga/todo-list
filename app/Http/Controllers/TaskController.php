@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\returnSelf;
+use function Ramsey\Uuid\v1;
 
 class TaskController extends Controller
 {
@@ -36,11 +37,41 @@ class TaskController extends Controller
         // $tasks = User::find(2)->tasks;
 
         // TODO: 完了済みタスク一覧取得　（done_atがNULLでない）
-        // TODO: 未完了タスク一覧取得　（done_atがNULLである）
+        //$tasksの中からdone_atがNULLでないもののみを取ってくる
+        $done_task_list = $tasks->whereNotNull('done_at');
+        $done_task_list->all();
+        // dd($done_task_list);
 
-        // return 'tasks.index';
+        // TODO: 未完了タスク一覧取得　（done_atがNULLである）
+        //$tasksの中からdone_atがNULLnoもののみを取ってくる
+        //配列で取れるパターン
+        $not_done_task_list = $tasks->whereNull('done_at')->all();
+        // $not_done_task_list->all();
+        // dd($not_done_task_list);
+
+        $now = Carbon::now(); // 現在時刻取得
+        $remind_list = []; // 表示用のリマインドするタスクリスト
+
+        // 以下で未完了タスクのうちリマインドするタスクを抽出する
+        foreach ($not_done_task_list as $not_done_task) {
+            $scheduled_end_date = Carbon::parse($not_done_task->scheduled_end_date); // 予定終了時刻をCarbonインスタンス化する
+            $diff_day = $now->diffInDays($scheduled_end_date); // Carbonオブジェクト同士の日数の差分比較
+            $diff_hour = $now->diffInHours($scheduled_end_date); // Carbonオブジェクト同士の時間の差分比較
+
+            $not_done_task->diff_day = $diff_day; // 元々のTask(モデル)のdiff_day属性(プロパティ)を追加
+            $not_done_task->diff_hour = $diff_hour; // 元々のTask(モデル)のdiff_hour属性(プロパティ)を追加
+
+            if ($now < $scheduled_end_date && $diff_day <= 2) { // 予定終了時刻($scheduled_end_date)が現在時刻($now)より未来である && 日数の差分が2以内 の時....
+                $remind_list[] = $not_done_task; // 表示用のリマインドするタスクリストにリマインドする未完了タスクを入れる
+            }
+        }
+        $remind_list_count = count($remind_list); // リマインドするタスクリストの件数取得
+        
         return view('task.index')
-            ->with('tasks', $tasks);
+            ->with('done_task_list', $done_task_list)
+            ->with('not_done_task_list', $not_done_task_list)
+            ->with('remind_list_count', $remind_list_count)
+            ->with('remind_list', $remind_list);
     }
 
     public function show(int $taskId )
