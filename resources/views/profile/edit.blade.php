@@ -12,8 +12,9 @@
                     ここにプロフィール画像の編集表示したい
                     <img src="{{ asset($profile->image_path) }}" width="20%" height="20%">
                     プロフィール画像の変更
-                    <form method="POST" action="/upload" enctype="multipart/form-data">
+                    <form method="POST" action={{ route('profile.image.update') }} enctype="multipart/form-data">
                         @csrf
+                        @method('PATCH')
                         <input type="file" name="image">
                         <button>変更！</button>
                       </form>

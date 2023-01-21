@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestImageController;
 use App\Http\Controllers\TopController;
@@ -22,9 +23,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',[DashboardController::class,'index'])
+->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     //profile表示
@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
     //以下plofile画像の変更処理ルーディング
     Route::patch('/profile/image', [ProfileController::class, 'updateImage'])->name('profile.image.update');
     
+
+    //TODO 以下commentのルーティング処理
 
     // get '/'
     // Route::get('/top', [TopController::class, 'index'])->name('top');

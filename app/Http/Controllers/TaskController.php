@@ -74,7 +74,7 @@ class TaskController extends Controller
             ->with('remind_list', $remind_list);
     }
 
-    public function show(int $taskId )
+    public function show(int $taskId)
     {
         $user = Auth::user();
 
