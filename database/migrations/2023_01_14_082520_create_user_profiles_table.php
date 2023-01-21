@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->text('image_path');
+            $table->text('image_path')->comment('画像パス');
             $table->timestamps();
         });
     }

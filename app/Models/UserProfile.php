@@ -16,6 +16,7 @@ class UserProfile extends Model
     ];
 
     // Userモデルとのリレーション定義
+    //1対1
     public function user()
     {
         return $this->belongsTo(User::class);
