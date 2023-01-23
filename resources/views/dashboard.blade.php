@@ -22,21 +22,23 @@
 
                     @foreach ($users as $user)
                         <div class="mr-2">
-                            <p>{{ $user->id . ' : ' . $user->name }}</p>
+                            <p>{{ $user['id'] . ' : ' . $user['name'] }}</p>
                             <div>
-                                @foreach ($user->tasks as $task)
-                                <div>
-                                    <h3>タスク名：{{ $task->task_name }}</h3>
-                                    <p>メモ：{{ $task->content }}</p>
-                                    <hr>
+                                @if ($user['tasks'] != null)
+                                    @foreach ($user['tasks'] as $task)
+                                    <div>
+                                        <h3>タスク名：{{ $task['task_name'] }}</h3>
+                                        <p>メモ：{{ $task['content'] }}</p>
+                                        <hr>
 
-                                    <form action="" method="post">
-                                        <input type="text" name="comment-{{ $task->id }}" placeholder="コメント">
-                                        <input type="hidden" name="task_id" value="{{ $task->id }}">
-                                        <input type="submit" value="投稿">
-                                    </form>
-                                </div>
-                                @endforeach
+                                        <form action="" method="post">
+                                            <input type="text" name="comment-{{ $task['id'] }}" placeholder="コメント">
+                                            <input type="hidden" name="task_id" value="{{ $task['id'] }}">
+                                            <input type="submit" value="投稿">
+                                        </form>
+                                    </div>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     @endforeach
