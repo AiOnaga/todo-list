@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\MypageController;
-use App\Http\Controllers\TaskController;            
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::put('tasks/{taskId}/done',[TaskController::class,'updateDone'])->name('tasks.update.done');
 });
 
+Route::get('/slam_dunk', [\App\Http\Controllers\SlamDunkController::class, 'index']);
 
 
 require __DIR__.'/auth.php';
