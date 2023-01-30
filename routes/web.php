@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TestImageController;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\TaskController;
@@ -21,14 +23,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',[DashboardController::class,'index'])
+->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    //profile表示
+    Route::get('/profile',[ProfileController::class, 'index'])->name('profile.index');
+    //profile登録
+    Route::post('/profile', [ProfileController::class, 'store'])->name('profile.store');
+    //profile編集画面
+    Route::get('/profile/{userId}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    //profile更新処理
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //以下plofile画像の変更処理ルーディング
+    Route::patch('/profile/image', [ProfileController::class, 'updateImage'])->name('profile.image.update');
+
+
+    //TODO 以下commentのルーティング処理
 
     // get '/'
     // Route::get('/top', [TopController::class, 'index'])->name('top');
@@ -64,6 +77,8 @@ Route::middleware('auth')->group(function () {
     Route::put('tasks/{taskId}/done',[TaskController::class,'updateDone'])->name('tasks.update.done');
 });
 
+Route::get('/test/image', [TestImageController::class, 'index']);
+Route::post('/test/upload', [TestImageController::class, 'upload']);
 Route::get('/slam_dunk', [\App\Http\Controllers\SlamDunkController::class, 'index']);
 
 

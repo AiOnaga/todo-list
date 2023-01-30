@@ -46,10 +46,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class);
     }
-
+    
+    //1対1
     public function profile()
     {
-        return $this->hasMany(UserProfile::class);
+        return $this->hasOne(UserProfile::class);
     }
-    
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
