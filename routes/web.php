@@ -5,7 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestImageController;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\MypageController;
-use App\Http\Controllers\TaskController;            
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
 
     //以下plofile画像の変更処理ルーディング
     Route::patch('/profile/image', [ProfileController::class, 'updateImage'])->name('profile.image.update');
-    
+
 
     //TODO 以下commentのルーティング処理
 
@@ -79,6 +79,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/test/image', [TestImageController::class, 'index']);
 Route::post('/test/upload', [TestImageController::class, 'upload']);
+Route::get('/slam_dunk', [\App\Http\Controllers\SlamDunkController::class, 'index']);
 
 
 require __DIR__.'/auth.php';
