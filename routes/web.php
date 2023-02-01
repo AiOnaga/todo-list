@@ -79,7 +79,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/test/image', [TestImageController::class, 'index']);
 Route::post('/test/upload', [TestImageController::class, 'upload']);
-Route::get('/slam_dunk', [\App\Http\Controllers\SlamDunkController::class, 'index']);
 
+//スラムダンク練習用ルーディング
+Route::get('/slam_dunk', [\App\Http\Controllers\SlamDunkController::class, 'index']);
+Route::get('/slam_dunk/{slam_dunk_high_school_id}',[\App\Http\Controllers\SlamDunkController::class, 'show'])->name('slam_dunk.show');
 
 require __DIR__.'/auth.php';

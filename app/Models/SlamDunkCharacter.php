@@ -16,6 +16,11 @@ class SlamDunkCharacter extends Model
      */
     public function highSchool()
     {
-        return $this->belongsTo(SlamDunkHighSchool::class);
+        return $this->belongsTo(SlamDunkHighSchool::class, 'slam_dunk_high_school_id');
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(SlamDunkPosition::class, 'slam_dunk_position_id');
     }
 }

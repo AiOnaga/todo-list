@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             SlamDunkHighSchoolSeeder::class,
-            SlamDunkCharacterSeeder::class
+            SlamDunkCharacterSeeder::class,
+            SlamDunkPositionSeeder::class
         ]);
     }
 }

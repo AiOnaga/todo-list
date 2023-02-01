@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\SlamDunkCharacter;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,6 +17,18 @@ class SlamDunkCharacterSeeder extends Seeder
      */
     public function run()
     {
+        // 方法1：deleteで削除
+        // DB::table('slam_dunk_characters')->delete();
+
+        // 方法2：トランケートで削除
+        DB::table('slam_dunk_characters')->truncate();
+
+        // ポジションのデータを全取得した後、idだけを抽出
+        // $positionIds = SlamDunkPosition::all()->pluck('id');
+        
+        // 最初のid(最小値)と最後のid(最大値)の中でランダムに一つ取得する
+        // mt_rand($positionIds->first(), $positionIds->last())
+
         $params = [
             [
                 'id' => 1,
@@ -23,6 +36,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '赤木剛憲',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' => mt_rand(1, 5),
             ],
             [
                 'id' => 2,
@@ -30,6 +44,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '木暮公延',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 3,
@@ -37,6 +52,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '宮城リョータ',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 4,
@@ -44,6 +60,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '桜木花道',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 5,
@@ -51,6 +68,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '流川楓',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 6,
@@ -58,6 +76,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '三井寿',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 7,
@@ -65,6 +84,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '魚住純',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 8,
@@ -72,6 +92,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '池上亮二',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 9,
@@ -79,6 +100,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '越野宏明',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 10,
@@ -86,6 +108,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '仙道彰',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 11,
@@ -93,6 +116,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '植草智之',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 12,
@@ -100,6 +124,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '牧紳一',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 13,
@@ -107,6 +132,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '高砂一馬',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 14,
@@ -114,6 +140,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '神宗一郎',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 15,
@@ -121,6 +148,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '武藤正',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 16,
@@ -128,6 +156,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '清田信長',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 17,
@@ -135,6 +164,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '藤真健司',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 18,
@@ -142,6 +172,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '花形透',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 19,
@@ -149,6 +180,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '長谷川一志',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 20,
@@ -156,6 +188,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '永野満',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
             [
                 'id' => 21,
@@ -163,6 +196,7 @@ class SlamDunkCharacterSeeder extends Seeder
                 'name' => '高野昭一',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'slam_dunk_position_id' =>  mt_rand(1, 5),
             ],
         ];
 
