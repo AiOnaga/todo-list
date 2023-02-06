@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class SubTask extends Model
 {
     use HasFactory;
 
@@ -21,19 +21,11 @@ class Task extends Model
     ];
 
     // Userモデルとのリレーション定義
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
-    public function comments()
+    public function task()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasManyThrough(User::class, Task::class);
     }
-
-    public function sub_tasks()
-    {
-        return $this->hasMany(SubTask::class);
-    }
+    
 }
 

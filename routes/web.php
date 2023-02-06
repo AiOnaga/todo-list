@@ -75,6 +75,24 @@ Route::middleware('auth')->group(function () {
 
     // patch '/task/:id/done'
     Route::put('tasks/{taskId}/done',[TaskController::class,'updateDone'])->name('tasks.update.done');
+
+    
+    //以下※※sub_taskのルーディング
+    //ログインしているユーザーの親タスク単位のタスク一覧
+    Route::get('/tasks/{taskId}',[TaskController::class, 'show'])->name('sub_tasks.show');
+
+    //子タスクの新規作成処理
+    Route::post('/tasks/{taskId}', [TaskController::class, 'store'])->name('sub_tasks.store');
+
+    //子タスクの編集画面表示
+    Route::get('/tasks/{taskId}/{subTaskId}edit', [TaskController::class, 'edit'])->name('sub_tasks.edit');
+
+    //子タスクの更新
+    Route::put('/tasks/{taskId}/{subTaskId}', [TaskController::class, 'update'])->name('sub_tasks.update');
+
+    //子タスクの削除
+    Route::delete('tasks/{taskId}/{subTaskId}',[TaskController::class, 'destroy'])->name('sub_tasks.destroy');
+    
 });
 
 Route::get('/test/image', [TestImageController::class, 'index']);

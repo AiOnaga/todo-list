@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('sub_tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('sub_task_id')->constrained('sub_tasks');
-            $table->string('task_name', 60);
+            $table->foreignId('task_id')->constrained('tasks');
             $table->text('content');
+            $table->string('sub_task_name', 60);
             $table->timestamp('scheduled_start_date');
             $table->timestamp('scheduled_end_date');
             $table->timestamp('done_at')->nullable();
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('sub_tasks');
     }
 };
