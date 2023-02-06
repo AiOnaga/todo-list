@@ -67,10 +67,7 @@ class TaskController extends Controller
         }
         $remind_list_count = count($remind_list); // リマインドするタスクリストの件数取得
 
-
-        //以下sub_taskの処理
-        
-
+      
         return view('task.index')
             ->with('done_task_list', $done_task_list)
             ->with('not_done_task_list', $not_done_task_list)
@@ -235,8 +232,6 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-
-
-    
+   
 
 }
