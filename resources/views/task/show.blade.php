@@ -26,7 +26,9 @@
                     <form action="{{ route('tasks.destroy', ['taskId' => $task->id]) }}" method="post">
                         @method('DELETE')
                         @csrf
-                        <input type="submit" value="削除する！">
+                        <input type="submit" value="削除する！"><br>
+                        
+                        <a href="{{ route('tasks.store' )}}">戻る >></a>
                     </form>
                     
                     <p>-------------------------</p>

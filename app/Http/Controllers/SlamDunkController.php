@@ -10,21 +10,15 @@ class SlamDunkController extends Controller
 {
     public function index()
     {
-        // $collection = collect([
-        //     'センター' => 3,
-        //     'ポイントガード' => 4,
-        //     'シューティングガード' => 2,
-        //     'スモールフォワード' => 5,
-        //     'パワーフォワード' => 1,
-        // ]);
-        // dd($collection->);
-
         //リレーションを使ってデータを取得する
         $schools = SlamDunkHighSchool::with('characters.position')->get();
         // dd($schools->pluck('characters')->flatten()->pluck('position')->pluck('name')->unique());
-        $arr = $schools->pluck('characters')->flatten()->pluck('slam_dunk_position_id')->countBy()->toArray();
-        $ids = array_keys($arr, max($arr));
+        // $arr = $schools->pluck('characters')->flatten()->pluck('slam_dunk_position_id')->countBy()->toArray();
+        // dd($schools->pluck('characters')->flatten()->pluck('slam_dunk_position_id')->mode());
+        // $ids = array_keys($arr, max($arr));
+        $ids = $schools->pluck('characters')->flatten()->pluck('slam_dunk_position_id')->mode();
         $result = SlamDunkPosition::whereIn('id', $ids)->get()->pluck('name');
+        // dd($result);
 
         // dd($result);
         // slam_dunk_positionsテーブルから$idsに合致するものを取得する
