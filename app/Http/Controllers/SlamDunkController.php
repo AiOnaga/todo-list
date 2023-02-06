@@ -4,18 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Models\SlamDunkCharacter;
 use App\Models\SlamDunkHighSchool;
+use App\Models\SlamDunkPosition;
 
 class SlamDunkController extends Controller
 {
     public function index()
     {
+        // $collection = collect([
+        //     'センター' => 3,
+        //     'ポイントガード' => 4,
+        //     'シューティングガード' => 2,
+        //     'スモールフォワード' => 5,
+        //     'パワーフォワード' => 1,
+        // ]);
+        // dd($collection->);
+
         //リレーションを使ってデータを取得する
-        $schools = SlamDunkHighSchool::with('characters')->get();
+        $schools = SlamDunkHighSchool::with('characters.position')->get();
+        // dd($schools->pluck('characters')->flatten()->pluck('position')->pluck('name')->unique());
+        $arr = $schools->pluck('characters')->flatten()->pluck('slam_dunk_position_id')->countBy()->toArray();
+        $ids = array_keys($arr, max($arr));
+        $result = SlamDunkPosition::whereIn('id', $ids)->get()->pluck('name');
+
+        // dd($result);
+        // slam_dunk_positionsテーブルから$idsに合致するものを取得する
+
         // dd($schools->pluck('characters')->flatten()->filter(function ($value, $key) {
         //     return $value->slam_dunk_high_school_id != 1;
         // })->pluck('name'));
-        $characters = SlamDunkCharacter::with('highSchool')->get();
-        dd($characters);
+        $characters = SlamDunkCharacter::with(['highSchool', 'position'])->get();
+        // dd($character->position->name);
+
+        // $positions = SlamDunkPosition::whereHas('characters', function($query) use ($slam_dunk_position_id){
+        //     $query->where('slam_dunk_position_id', $slam_dunk_position_id);
+        // })->get();
+
+        $positions = SlamDunkPosition::with('characters.highSchool')->get();
+        // dd(SlamDunkPosition::with(['characters', 'characters.highSchool'])->toSql());
+        // dd($positions->first()->characters->pluck('highSchool')->pluck('name'));
+        
 
         return view('slam_dunk.index', compact('schools', 'characters'));
     }
