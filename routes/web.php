@@ -6,6 +6,7 @@ use App\Http\Controllers\TestImageController;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\TaskController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,7 +63,7 @@ Route::middleware('auth')->group(function () {
 
     // get '/task/:id/edit'
     //編集画面表示
-    Route::get('/tasks/{taskId}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+    Route::get('/tasks/{taskId}/edit', [TaskController::class, 'edit'])->middleware('test')->name('tasks.edit');
 
     // patch '/task/:id/edit'
     Route::put('/tasks/{taskId}', [TaskController::class, 'update'])->name('tasks.update');

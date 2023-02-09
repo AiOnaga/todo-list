@@ -105,6 +105,12 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
+
+        dd($request->task_name);
+
+        if ($request->input('task_name')) {
+            $sample_task_name = '【タスク名】' . $request->input('task_name');
+          }
         // dd(Carbon::parse($request->input('scheduled_start_date')));
         // dd($request->all());
 
