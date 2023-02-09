@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\User;
+use App\Models\SubTask;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -83,6 +84,10 @@ class TaskController extends Controller
             ->where('id', $taskId)
             ->first();
 
+        //リレーションでデータを取得
+        $sub_tasks = $task->sub_tasks;
+        // dd($sub_tasks);
+
         // $user->id を使う
         // $task = Task::where('id', $taskId)
         //     ->where('user_id', $user->id)
@@ -92,7 +97,10 @@ class TaskController extends Controller
         // dd($task);
 
         return view('task.show')
-            ->with('task', $task);
+            ->with('task', $task)
+            ->with('sub_tasks', $sub_tasks)
+            ->with('taskId',$taskId)
+            ->with('me', $user);
     }
 
     public function store(Request $request)
@@ -127,7 +135,41 @@ class TaskController extends Controller
         ]);
         // dd($result);
 
+        //サブタスクの新規作成
+        
         return redirect()->route('tasks.show', ['taskId' => $result->id]);
+    }
+
+    public function subStore(Request $request, int $taskId)
+    {
+        // $result = SubTask::create([
+        //     'task_id' => $taskId,
+        //     'sub_task_name' => $request->input('sub_task_name'),
+        //     'content' => $request->input('content'),
+        //     'scheduled_start_date' => Carbon::parse($request->input('scheduled_start_date')),
+        //     'scheduled_end_date' => Carbon::parse($request->input('scheduled_end_date')),
+        // ]);
+
+        $task = Task::find($taskId);
+
+        $result = $task->sub_tasks()->create([
+            'sub_task_name' => $request->input('sub_task_name'),
+            'content' => $request->input('content'),
+            'scheduled_start_date' => Carbon::parse($request->input('scheduled_start_date')),
+            'scheduled_end_date' => Carbon::parse($request->input('scheduled_end_date')), 
+        ]);
+
+        //親の親（user）から親（task）を介してサブタスクの新規作成
+        // dd($request->user()->tasks()->where('id', $taskId)->first());
+        // $request->user()->tasks()->where('id', $taskId)->first()->sub_tasks()->create([
+        //     'sub_task_name' => $request->input('sub_task_name'),
+        //     'content' => $request->input('content'),
+        //     'scheduled_start_date' => Carbon::parse($request->input('scheduled_start_date')),
+        //     'scheduled_end_date' => Carbon::parse($request->input('scheduled_end_date')), 
+        // ]);
+
+
+        return redirect()->route('tasks.show',['taskId' => $taskId]);
     }
 
     public function edit(int $taskId)
@@ -230,6 +272,102 @@ class TaskController extends Controller
         ]);
 
         return redirect()->route('tasks.index');
+    }
+
+    public function allTasks()
+    {
+
+        $users = [
+            [
+                'id' => 1,
+                'name' => 'ai',
+                'tasks' => [
+                    [
+                        'id' => 1,
+                        'task_name' => '買い物'
+                    ],
+                    [
+                        'id' => 2,
+                        'task_name' => '勉強'
+                    ],
+                    [
+                        'id' => 3,
+                        'task_name' => '美容室'
+                    ],
+                ]
+            ],
+            [
+                'id' => 2,
+                'name' => 'juri',
+                'tasks' => [
+                    [
+                        'id' => 1,
+                        'task_name' => '買い物'
+                    ],
+                    [
+                        'id' => 2,
+                        'task_name' => '勉強'
+                    ],
+                    [
+                        'id' => 3,
+                        'task_name' => '美容室'
+                    ],
+                ]
+            ],
+            [
+                'id' => 3,
+                'name' => 'laravel',
+                'tasks' => [
+                    [
+                        'id' => 1,
+                        'task_name' => '買い物'
+                    ],
+                    [
+                        'id' => 2,
+                        'task_name' => '勉強'
+                    ],
+                    [
+                        'id' => 3,
+                        'task_name' => '美容室'
+                    ],
+                ]
+            ],
+        ];
+
+        $users = User::with(['tasks'])->get();
+        // dd($users);
+
+        return view('task.all')->with('users', $users);
+    }
+
+
+    public function userTask($userId, $taskId)
+    {
+        $me = Auth::user();
+
+        $user = User::find($userId);
+
+        $task = $user->tasks()
+            ->where('id', $taskId)
+            ->first();
+
+        //リレーションでデータを取得
+        $sub_tasks = $task->sub_tasks;
+        // dd($sub_tasks);
+
+        // $user->id を使う
+        // $task = Task::where('id', $taskId)
+        //     ->where('user_id', $user->id)
+        //     // ->toSql();
+        //     ->first();
+
+        // dd($task);
+
+        return view('task.show')
+            ->with('task', $task)
+            ->with('sub_tasks', $sub_tasks)
+            ->with('taskId',$taskId)
+            ->with('me', $me);
     }
 
    

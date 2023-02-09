@@ -11,7 +11,7 @@ class SubTask extends Model
 
     // fillable定義
     protected $fillable = [
-        'user_id',
+        'task_id',
         'sub_task_name',
         'task_name',
         'content',
@@ -20,12 +20,18 @@ class SubTask extends Model
         'done_at'
     ];
 
-    // Userモデルとのリレーション定義
-
+    // Taskモデルとのリレーション定義
     public function task()
     {
-        return $this->hasManyThrough(User::class, Task::class);
+        return $this->belongsTo(Task::class);
     }
-    
+
+    // $subTask = SubTask::find(1);
+    // $subTask->task->user
+
+    // これは取れる
+    // $subTask->task()->where('task_name', 'キュウリ買う')->first()
+    // これは取れない
+    // // $subTask->task()->where('task_name', 'トマト買う')->first()
 }
 

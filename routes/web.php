@@ -78,10 +78,10 @@ Route::middleware('auth')->group(function () {
 
     //以下※※sub_taskのルーディング
     //ログインしているユーザーの親タスク単位のタスク一覧
-    Route::get('/tasks/{taskId}',[TaskController::class, 'show'])->name('sub_tasks.show');
+    // Route::get('/tasks/{taskId}',[TaskController::class, 'show'])->name('sub_tasks.show');
 
     //子タスクの新規作成処理
-    Route::post('/tasks/{taskId}', [TaskController::class, 'store'])->name('sub_tasks.store');
+    Route::post('/tasks/{taskId}', [TaskController::class, 'subStore'])->name('sub_tasks.store');
 
     //子タスクの編集画面表示
     Route::get('/tasks/{taskId}/{subTaskId}/edit', [TaskController::class, 'edit'])->name('sub_tasks.edit');
@@ -92,6 +92,11 @@ Route::middleware('auth')->group(function () {
     //子タスクの削除
     Route::delete('tasks/{taskId}/{subTaskId}',[TaskController::class, 'destroy'])->name('sub_tasks.destroy');
     
+    // 全ユーザーのタスク一覧表示
+    Route::get('/all_user/tasks', [TaskController::class, 'allTasks'])->name('all.tasks.index');
+
+    // 各ユーザーのタスク一覧表示
+    Route::get('users/{userId}/tasks/{taskId}',[TaskController::class, 'userTask'])->name('user.tasks.show');
 });
 
 Route::get('/test/image', [TestImageController::class, 'index']);
